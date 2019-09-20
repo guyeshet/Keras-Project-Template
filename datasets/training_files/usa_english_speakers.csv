@@ -1,0 +1,9 @@
+href,language_num,sex,birth_place,native_language,other_languages,age_sex,age_of_english_onset,english_learning_method,english_residence,length_of_english_residence,age,new_native_language
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=202,hebrew1,male,israel,hebrew,['none'],"['23,', 'male', '']",10.0,academic,[''],0.0,23,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=203,hebrew2,male,israel,hebrew,['none'],"['24,', 'male', '']",10.0,academic,[''],0.0,24,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=204,hebrew3,male,israel,hebrew,['none'],"['33,', 'male', '']",8.0,academic,['usa'],1.5,33,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=205,hebrew4,female,israel,hebrew,"['spanish', '']","['20,', 'female', '']",9.0,academic,['canada'],0.5,20,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=206,hebrew5,male,israel,hebrew,['none'],"['23,', 'male', '']",10.0,academic,['usa'],3.0,23,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=411,hebrew6,female,israel,hebrew,"['french', 'spanish', 'german', '']","['33,', 'female', '']",9.0,academic,[''],0.0,33,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=1074,hebrew8,male,israel,hebrew,"['italian', 'spanish', 'french', '']","['28,', 'male', '']",7.0,naturalistic,[''],0.0,28,other
+http://accent.gmu.edu/browse_language.php?function=detail&speakerid=2840,hebrew11,female,israel,hebrew,"['spanish', '']","['26,', 'female', '']",9.0,academic,['usa'],0.9,26,other
