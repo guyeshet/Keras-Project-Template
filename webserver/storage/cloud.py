@@ -52,9 +52,10 @@ class CloudStorage:
 
         return os.path.join(dest_path, "model.h5")
 
-    def upload_prediction(self, source, model, status):
+    def upload_prediction(self, source, model_type, model_num, status):
         dest_path = "/".join((self._uploads_folder(),
-                              model,
+                              model_type,
+                              model_num,
                               self._get_status(status),
                               self._base_name(source)))
         self.client.upload_file(source, dest_path)

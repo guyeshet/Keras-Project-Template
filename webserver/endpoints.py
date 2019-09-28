@@ -7,7 +7,7 @@ import flask
 from utils.dirs import verify_folder
 from utils.sound import SoundUtils
 from utils.utils import get_root
-from webserver.loader import predict_class_audio, MODEL_TYPE
+from webserver.loader import predict_class_audio, MODEL_TYPE, MODEL_NUM
 from pydub import AudioSegment
 
 from webserver.storage.factory import StorageFactory
@@ -126,7 +126,8 @@ def predict():
         # upload prediction to cloud storage
         storage = StorageFactory.cloud()
         storage.upload_prediction(source=sound_file,
-                                  model=MODEL_TYPE,
+                                  model_type=MODEL_TYPE,
+                                  model_num=MODEL_NUM,
                                   status=response["predictions"])
 
     # return the data dictionary as a JSON response
