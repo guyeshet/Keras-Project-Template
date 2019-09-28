@@ -19,7 +19,7 @@ class CloudStorage:
 
     @staticmethod
     def _get_status(status):
-        return "failure" if status else "success"
+        return "failure" if int(status) == 1 else "success"
 
     @staticmethod
     def _uploads_folder():

@@ -95,7 +95,7 @@ def bot():
     storage = StorageFactory.cloud()
     storage.upload_prediction(source=sound_file_path,
                               model=MODEL_TYPE,
-                              status=response["success"])
+                              status=response["predictions"])
 
     return flask.jsonify(response)
 
@@ -127,7 +127,7 @@ def predict():
         storage = StorageFactory.cloud()
         storage.upload_prediction(source=sound_file,
                                   model=MODEL_TYPE,
-                                  status=response["success"])
+                                  status=response["predictions"])
 
     # return the data dictionary as a JSON response
     return flask.jsonify(response)

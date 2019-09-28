@@ -5,6 +5,8 @@ DEFAULT = "default"
 CLOUD = "cloud"
 LOCAL = "local"
 
+cloud_storage = CloudStorage()
+
 
 class StorageFactory:
     """
@@ -15,15 +17,15 @@ class StorageFactory:
     def default(engine_type=DEFAULT):
 
         if engine_type == DEFAULT:
-            return CloudStorage()
+            return cloud_storage
         elif engine_type == CLOUD:
-            return CloudStorage()
+            return cloud_storage
         elif engine_type == LOCAL:
             return LocalStorage()
 
     @staticmethod
     def cloud():
-        return CloudStorage()
+        return cloud_storage
 
     @staticmethod
     def local():
