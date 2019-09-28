@@ -9,7 +9,8 @@ import os
 from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
 
 from utils.dirs import verify_folder
-from utils.utils import get_root, upload_blob
+from utils.utils import get_root
+from webserver.storage.factory import StorageFactory
 
 
 class AccentTrainer(BaseTrain):
@@ -131,12 +132,12 @@ class AccentTrainer(BaseTrain):
             f.write(json_config)
 
     def cloud_upload(self, model_type_path, exp_name, exp_id):
-
-        for subdir, dirs, files in os.walk(model_type_path):
-            for file in files:
-                # print os.path.join(subdir, file)
-                filepath = subdir + os.sep + file
-
-                dest_name = "/".join((exp_name, exp_id, file))
-                upload_blob(source_file_name=filepath,
-                            destination_blob_name=dest_name)
+        """
+        Uploads the local models folder to the cloud
+        :param model_type_path:
+        :param exp_name:
+        :param exp_id:
+        :return:
+        """
+        storage = StorageFactory.cloud()
+        storage.save_models_folder(model_type_path, exp_name, exp_id)
