@@ -1,4 +1,5 @@
 import pathlib
+import sys
 
 import pandas as pd
 import urllib.request
@@ -7,6 +8,7 @@ import multiprocessing as mp
 from pydub import AudioSegment
 
 from utils.utils import get_root
+from webserver.storage.factory import StorageFactory
 
 
 class AudioDownloader:
@@ -34,7 +36,7 @@ class AudioDownloader:
         '''
         pathlib.Path(self.destination_folder).mkdir(parents=True, exist_ok=True)
 
-    def download(self, url, output_file):
+    def download(self, url, output_file, upload=True):
 
         # create the output file path
         sound_file_path = os.path.join(self.destination_folder, "{}.wav".format(output_file))
@@ -43,8 +45,13 @@ class AudioDownloader:
             print('downloading {} to {}'.format(output_file, sound_file_path))
         (filename, headers) = urllib.request.urlretrieve(url)
         sound = AudioSegment.from_mp3(filename)
-
+        # saving the file in wav format converted from mp3
         sound.export(sound_file_path, format="wav")
+
+        # upload to cloud storage
+        if upload:
+            storage = StorageFactory.cloud()
+            storage.upload_wav(sound_file_path)
 
     def get_audio(self):
         '''
@@ -74,13 +81,13 @@ class AudioDownloader:
         return len(audio_urls)
 
 
-# if __name__ == '__main__':
-#     '''
-#     Example console command
-#     python GetAudio.py audio_metadata.csv
-#     '''
-#     csv_file = sys.argv[1]
-#     ga = AudioDownloader(csv_filepath=csv_file,
-#                          debug=True)
-#     ga.get_audio()
+if __name__ == '__main__':
+    '''
+    Example console command
+    python GetAudio.py audio_metadata.csv
+    '''
+    csv_file = sys.argv[1]
+    ga = AudioDownloader(csv_filepath=csv_file,
+                         debug=True)
+    ga.get_audio()
 
