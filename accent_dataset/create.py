@@ -64,6 +64,7 @@ if __name__ == '__main__':
     # dataset_with_all_english_speakers(download=True,
     #                                   languages=DEFAULT_LANGUAGES,
     #                                   input_file=AccentDataLoader.csv_path("all_english_speakers.csv"))
+    dataset_with_only_usa_natives(input_file=AccentDataLoader.csv_path("all_english_speakers.csv"))
     dataset_with_only_uk_natives(input_file=AccentDataLoader.csv_path("all_english_speakers.csv"))
 
 

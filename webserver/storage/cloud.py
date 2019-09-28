@@ -24,6 +24,10 @@ class CloudStorage:
         return "uploads"
 
     @staticmethod
+    def _dataset_folder():
+        return "dataset"
+
+    @staticmethod
     def _base_name(source):
         return ntpath.basename(source)
 
@@ -31,6 +35,11 @@ class CloudStorage:
         dest_path = "/".join((self._uploads_folder(),
                               model,
                               self._get_status(status),
+                              self._base_name(source)))
+        self.client.upload_file(source, dest_path)
+
+    def upload_wav(self, source):
+        dest_path = "/".join((self._dataset_folder(),
                               self._base_name(source)))
         self.client.upload_file(source, dest_path)
 
