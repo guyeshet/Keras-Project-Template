@@ -94,8 +94,7 @@ def bot():
     # upload prediction to cloud storage
     storage = StorageFactory.cloud()
     storage.upload_prediction(source=sound_file_path,
-                              model_type=MODEL_TYPE,
-                              model_num=MODEL_NUM,
+                              model=MODEL_TYPE,
                               status=response["predictions"])
 
     return flask.jsonify(response)
