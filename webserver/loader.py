@@ -8,8 +8,8 @@ from utils.utils import from_env, get_root
 from webserver.storage.factory import StorageFactory
 
 model = None
-MODEL_TYPE = from_env('MODEL_TYPE', 'usa_english_speakers')
-MODEL_NUM = from_env('MODEL_NUM', "a1cf332450594f849d8eb27e605dd8d0")
+MODEL_TYPE = from_env('MODEL_TYPE', 'uk_target_only_native_speakers')
+MODEL_NUM = from_env('MODEL_NUM', "64812b64080b4668ac824c9ca75b6c04")
 
 
 def predict_class_audio(MFCCs):
