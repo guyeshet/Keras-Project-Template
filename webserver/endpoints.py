@@ -1,20 +1,20 @@
-import datetime
 import os
 import urllib.request
 
 import flask
 
 # initialize our Flask application and the Keras model
-from werkzeug.utils import secure_filename
-
 from utils.dirs import verify_folder
 from utils.sound import SoundUtils
 from utils.utils import get_root
-from webserver.loader import predict_class_audio
+from webserver.loader import predict_class_audio, MODEL_TYPE
 from pydub import AudioSegment
+
+from webserver.storage.factory import StorageFactory
 
 app = flask.Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(get_root(), "webserver", "uploads")
+
 verify_folder(app.config['UPLOAD_FOLDER'])
 
 
@@ -34,33 +34,28 @@ def index():
     return "Welcome to the AccentTrainer Keras REST API!"
 
 
-def save_file(request):
-
-    format = "%Y-%m-%dT%H:%M:%S"
-    now = datetime.datetime.utcnow().strftime(format)
-
-    try:
-        file = request.files['file']
-    except:
-        file = None
+def save_file_from_request(request):
+    """
+    Get a file object in the request and save it locally for predicition
+    :param request:
+    :return:
+    """
+    file = request.files.get('file')
 
     if not file:
         full_path = None
         file_uploaded = False
         return file_uploaded, full_path
 
-    filename = file.filename
+    storage = StorageFactory.local()
+    full_path = storage.save_file(file, root=app.config['UPLOAD_FOLDER'])
 
-    filename = now + '_' + filename
-    filename = secure_filename(filename)
-    full_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    file.save(full_path)
     file_uploaded = True
 
     return file_uploaded, full_path
 
 
-def download_file(file_path_url):
+def download_remote_file(file_path_url):
     name = file_path_url.split("/")[-1]
     save_path = os.path.join(app.config['UPLOAD_FOLDER'], name)
     current_file = urllib.request.urlretrieve(file_path_url, save_path)
@@ -84,7 +79,7 @@ def bot():
         print(data)
 
         try:
-            file_path = download_file(data["path"])
+            file_path = download_remote_file(data["path"])
 
             prediction = get_prediction(file_path)
 
@@ -107,18 +102,26 @@ def predict():
 
     # ensure an image was properly uploaded to our endpoint
     if flask.request.method == "POST":
-        if flask.request.files.get("file"):
 
-            # read the sound file
-            status, sound_file = save_file(flask.request)
-
-            prediction = get_prediction(sound_file)
-            response["predictions"] = prediction
-
-            # indicate that the request was a success
-            response["success"] = True
-        else:
+        # make sure we received a file in the request
+        if not flask.request.files.get("file"):
             response["error"] = "missing file key: 'file'"
+            return flask.jsonify(response)
+
+        # read the sound file
+        status, sound_file = save_file_from_request(flask.request)
+
+        prediction = get_prediction(sound_file)
+        response["predictions"] = prediction
+
+        # indicate that the request was a success
+        response["success"] = True
+
+        # upload prediction to cloud storage
+        storage = StorageFactory.cloud()
+        storage.upload_prediction(source=sound_file,
+                                  model=MODEL_TYPE,
+                                  status=response["success"])
 
     # return the data dictionary as a JSON response
     return flask.jsonify(response)

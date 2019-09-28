@@ -7,6 +7,9 @@ from keras.engine.saving import load_model
 from utils.utils import from_env, get_root, get_blob
 
 model = None
+MODEL_TYPE = from_env('MODEL_TYPE', 'all_english_speakers')
+MODEL_NUM = from_env('MODEL_NUM', "d6fb4d1597eb437cabd308274c911a3a")
+
 
 def load_model_from_cloud(model_path):
     blob_path = get_blob(model_path)
@@ -34,8 +37,6 @@ def load(from_cloud=True):
     # The current served model based on the experiment type
 
     global model
-    MODEL_TYPE = from_env('MODEL_TYPE', 'all_english_speakers')
-    MODEL_NUM = from_env('MODEL_NUM', "d6fb4d1597eb437cabd308274c911a3a")
 
     # load once for the application
     model_path = "/".join((MODEL_TYPE, MODEL_NUM, "model.h5"))

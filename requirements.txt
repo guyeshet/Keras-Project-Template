@@ -11,5 +11,5 @@ comet-ml
 flask
 waitress
 tqdm
-google-cloud-storage
 oauth2client
+cloud-storage-client==1.3.2
