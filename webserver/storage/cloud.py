@@ -1,12 +1,6 @@
 import ntpath
-import os
 from cloud_storage_client import storage
-
-import gswrap
-
-# storage_client = storage.Client.from_service_account_json(os.path.join(get_root(),
-#                                                                        'creds.json'))
-from utils.utils import get_root, from_env
+from utils.utils import from_env
 
 
 class CloudStorage:
