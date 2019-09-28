@@ -79,9 +79,9 @@ def bot():
         print(data)
 
         try:
-            file_path = download_remote_file(data["path"])
+            sound_file_path = download_remote_file(data["path"])
 
-            prediction = get_prediction(file_path)
+            prediction = get_prediction(sound_file_path)
 
             # indicate that the request was a success
             response["success"] = True
@@ -90,6 +90,12 @@ def bot():
 
         except Exception as e:
             return flask.jsonify({"error": e})
+
+    # upload prediction to cloud storage
+    storage = StorageFactory.cloud()
+    storage.upload_prediction(source=sound_file_path,
+                              model=MODEL_TYPE,
+                              status=response["success"])
 
     return flask.jsonify(response)
 
