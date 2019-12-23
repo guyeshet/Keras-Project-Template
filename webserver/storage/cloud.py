@@ -12,9 +12,10 @@ class CloudStorage:
         self.client = storage.StorageClient(
             from_env('STORAGE_PROVIDER', "GCS"),
             # GOOGLE_CLOUD_STORAGE = 'GCS', AMAZON_S3 = 'S3', AZURE_BLOB_STORAGE = 'ABS'
-            from_env('STORAGE_BUCKET_NAME', "accent-models"),
-            from_env('STORAGE_ACCESS_KEY', "GOOG1EUKXA2YGGFNU55LZZNUDPUUELFJ4RYERL5NFYO4R6EXT6NTBAP3VZB6I"),
-            from_env('STORAGE_SECRET_KEY', "hA5nTOouw/u59yWBq/XcBuL6BhEkfJAiIvqFoxzu")
+            from_env('STORAGE_BUCKET_NAME', "accent-bot-models"),
+            # For geshet account
+            from_env('STORAGE_ACCESS_KEY', "GOOG1EM6OWXWJMJQZP6DENNCJB62GGTSH3UZJ3TYTXLDOS3QXSIUFI2VEI3VA"),
+            from_env('STORAGE_SECRET_KEY', "A94hpcFfAb4ddfbEbeLo96pTJ2Vnt7x3f5RsNmwM")
         )
 
     @staticmethod
